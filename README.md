@@ -1,1 +1,1 @@
-# thesis-codes
+# This repository contains codes related to my thesis.
