@@ -29,7 +29,7 @@ a(15) = 848355
 ```
 
 ### Running time
-Algorithm complexity is `O(p(n) n^4)`.
+Algorithm complexity is `O(p(n) n^4)`, where `p(n)` is [A000041](https://oeis.org/A000041).
 
 Calculation of `a(15)` takes about 2 seconds.
 
