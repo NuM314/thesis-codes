@@ -3,12 +3,12 @@
 
 For a given `n` the code calculates `a(1), a(2), ..., a(n)`.
 
-### Usage:
-```
+### Usage
+```bash
 python calculate.py
 ```
 
-### Example:
+### Example
 ```
 Enter n: 15
 a(1) = 1
@@ -28,8 +28,9 @@ a(14) = 273234
 a(15) = 848355
 ```
 
-Algorithm complexity is O(p(n) n^4).
+### Running time
+Algorithm complexity is `O(p(n) n^4)`.
 
-Calculation of a(15) takes about 2 seconds.
+Calculation of `a(15)` takes about 2 seconds.
 
-Calculation of a(30) takes about 15 minutes.
+Calculation of `a(30)` takes about 15 minutes.
