@@ -1,6 +1,5 @@
 from fractions import gcd
 from math import factorial, sqrt
-import math
 from fft_multiplication import multiply_1d
 
 def lcm(a, b):
@@ -21,7 +20,7 @@ def calculate_comb(n):
             comb[i][j] = comb[i - 1][j] + comb[i - 1][j - 1]
     return comb
 
-def calculate_r(partition):
+def calculate_t(partition):
     n = sum(partition)
     res_vector = [[0] * (n + 1) for i in range(n + 1)]
     comb = calculate_comb(n)
@@ -73,31 +72,31 @@ def multiply_2d(v1, v2):
             res[i][j] = mult[n * N + i * N + n + j]
     return res
 
-def calculate_g(partition):
+def calculate_F(partition):
     n = sum(partition)
-    r = calculate_r(partition)
+    t = calculate_t(partition)
 
-    g = [[0] * (n + 1) for i in range(n + 1)]
-    g[0][0] = 1
+    F = [[0] * (n + 1) for i in range(n + 1)]
+    F[0][0] = 1
     add = int(sqrt(n)) + 1
 
     # O(sqrt(n)) iterations
     for i in range(1, n + 1, add):
         # O(mul(n^2))
-        tmp = multiply_2d(g, r) # bottleneck line. overall complexity: O(p(n) n^2.5 log(n))
+        tmp = multiply_2d(F, t) # bottleneck line. overall complexity: O(p(n) n^2.5 log(n))
 
         # O(sqrt(n)) iterations
         for curi in range(i, min(i + add, n + 1)):
             # O(sqrt(n)) iterations
             for k in range(i, curi):
                 # O(mul(n))
-                poly = multiply_1d(g[k], r[curi - k]) # bottleneck line. overall complexity: O(p(n) n^2.5 log(n))
+                poly = multiply_1d(F[k], t[curi - k]) # bottleneck line. overall complexity: O(p(n) n^2.5 log(n))
                 # O(n) iterations
                 for j in range(n + 1):
                     tmp[curi][j] = tmp[curi][j] + poly[j]
             for j in range(n + 1):
-                g[curi][j] = tmp[curi][j] // curi
-    return g
+                F[curi][j] = tmp[curi][j] // curi
+    return F
 
 def partition_counts(p, n):
     result = [0] * (n + 1)
@@ -118,10 +117,10 @@ def calculate_answers(n):
     num_partitions = 0
     for partition in generate_partitions(n):
         num_partitions += 1
-        g = calculate_g(partition)
+        F = calculate_F(partition)
         mult = calculate_partition_multiplier(partition)
         for i in range(n + 1):
-            answers[i] += g[n][i] * mult
+            answers[i] += F[n][i] * mult
 
     for i in range(n + 1):
         assert answers[i] % factorial(n) == 0
